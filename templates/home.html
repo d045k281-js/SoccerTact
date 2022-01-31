@@ -9,5 +9,73 @@
         <h1>SoccerTact</h1>
         
       </div>
+
+     
+      <script>
+         function passan(){
+        document.getElementById("myImg").src = "/static/passes.png";
+      }
+    </script>
+      <form  method = "post">
+        <input type="button" id='script' name="submit"   onclick="passan()" value="Passes Analysis">
+        <img id="myImg" width="50%" height="50%">
+    </form>
+    <div id="teamopt">
+    <div class="bp3-html-select .modifier">
+        <select :modifier id ="mySelect">
+          <option id="option" selected >Choose a team...</option>
+    
+        </select>
+        <span class="bp3-icon bp3-icon-double-caret-vertical"></span>
+      </div>
+      <br></br>
+    <button onclick="loadteams()" id="play"> Play</button>
+    </div>
+    <script>
+        async function loadteams(){
+        var mySelect = document.getElementById('mySelect');
+        var namesteam=mySelect.options[mySelect.selectedIndex].value;
+        console.log(namesteam.split(",")[1])
+     
+    
+    }
+       
+      setTimeout(team1, 0.01);
+      async function team1(){
+      const response = await fetch('/static/44.json');
+      const names = await response.json();
+      for(i=0; i<32; i++){
+      var varhome=(names[i]["home_team"]["home_team_name"]); 
+      var varaway=names[i]["away_team"]["away_team_name"];
+      var id=names[i]["match_id"]
+      var teams=varhome+" vs "+varaway+" , "+ id;
+      console.log(id);
+      var mySelect = document.getElementById('mySelect');
+        var newOption = document.createElement('option');
+    
+    newOption.value = teams;
+    
+    // Not all browsers support textContent (W3C-compliant)
+    // When available, textContent is faster (see http://stackoverflow.com/a/1359822/139010)
+    if (typeof newOption.textContent === 'undefined')
+    {
+        newOption.innerText = teams;
+    }
+    else
+    {
+        newOption.textContent = teams;
+    }
+      
+    
+    mySelect.appendChild(newOption);
+    }
+    
+       
+     
+      }
+    </script>
+    
+    
+
 </body>
 </html>

@@ -22,7 +22,7 @@ away_team_required ="Liverpool"
 file_name=str(match_id_required)+'.json'
 
 import json
-with open('/Users/atifsiddiqui/Documents/SoccerTact/open-data-master/data/events/'+file_name) as data_file:
+with open('/Users/deepak/Documents/SoccerTact/data/events/'+file_name) as data_file:
     #print (mypath+'events/'+file)
     data = json.load(data_file)
     
@@ -30,6 +30,7 @@ with open('/Users/atifsiddiqui/Documents/SoccerTact/open-data-master/data/events
 #store the dataframe in a dictionary with the match id as key (remove '.json' from string)
 from pandas.io.json import json_normalize
 df = json_normalize(data, sep = "_").assign(match_id = file_name[:-5])
+
 
 Liv_data =  df.loc[df['team_name'] == 'Liverpool'].set_index('id')
 real_data =  df.loc[df['team_name'] == 'Real Madrid'].set_index('id')

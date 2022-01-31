@@ -29,7 +29,7 @@ away_team_required ="Liverpool"
 file_name=str(match_id_required)+'.json'
 
 import json
-with open('/Users/atifsiddiqui/Documents/SoccerTact/open-data-master/data/events/'+file_name) as data_file:
+with open('/Users/deepak/Documents/SoccerTact/data/events/'+file_name) as data_file:
     #print (mypath+'events/'+file)
     data = json.load(data_file)
     
@@ -58,5 +58,6 @@ for i,thepass in passes.iterrows():
         ax.add_patch(passArrow)
 
 fig.set_size_inches(10, 7)
-#fig.savefig('Output/passes.pdf', dpi=100)
-plt.show()
+##fig.savefig('Output/passes.pdf', dpi=100)
+fig.savefig('static/passes.png')
+##plt.show()
