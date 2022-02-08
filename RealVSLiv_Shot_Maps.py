@@ -22,7 +22,7 @@ away_team_required ="Liverpool"
 file_name=str(match_id_required)+'.json'
 
 import json
-with open('/Users/atifsiddiqui/Documents/SoccerTact/open-data-master/data/events/'+file_name) as data_file:
+with open('C:/Users/fares/OneDrive/Documentos/eecs 582/project/SoccerTact/'+file_name) as data_file:
     #print (mypath+'events/'+file)
     data = json.load(data_file)
     
@@ -41,32 +41,40 @@ for i,shot in shots.iterrows():
     x=shot['location'][0]
     y=shot['location'][1]
     
-    goal=shot['shot_outcome_name']=='Goal'
+    outcome=shot['shot_outcome_name']
     team_name=shot['team_name']
     
     circleSize=2
     circleSize=np.sqrt(shot['shot_statsbomb_xg'])*8
 
     if (team_name==home_team_required):
-        if goal:
+        if outcome == 'Goal':
             shotCircle=plt.Circle((x,pitchWidthY-y),circleSize,color="red")
             plt.text((x+1),pitchWidthY-y+1,shot['player_name']) 
-        else:
+        elif outcome == "Blocked":
             shotCircle=plt.Circle((x,pitchWidthY-y),circleSize,color="red")     
             shotCircle.set_alpha(.2)
+        else:
+            shotCircle=plt.Circle((x,pitchWidthY-y),circleSize,color="red", fill = False)     
     elif (team_name==away_team_required):
-        if goal:
+        if outcome == 'Goal':
             shotCircle=plt.Circle((pitchLengthX-x,y),circleSize,color="blue") 
             plt.text((pitchLengthX-x+1),y+1,shot['player_name']) 
-        else:
+        elif outcome == "Blocked":
             shotCircle=plt.Circle((pitchLengthX-x,y),circleSize,color="blue")      
             shotCircle.set_alpha(.2)
+        else:
+            shotCircle=plt.Circle((pitchLengthX-x,y),circleSize,color="blue", fill = False)
     ax.add_patch(shotCircle)
     
     
 plt.text(5,75,away_team_required + ' shots') 
-plt.text(80,75,home_team_required + ' shots') 
-     
+plt.text(80,75,home_team_required + ' shots')
+# circ = plt.Circle((80,-5),2,color="red")
+# ax.add_patch(circ) 
+plt.text(80,-5,'no fill = off-target ')
+plt.text(80,-8,  'shaded = on-target')
+
 fig.set_size_inches(10, 7)
 #fig.savefig('Output/shots.pdf', dpi=100) 
 plt.show()

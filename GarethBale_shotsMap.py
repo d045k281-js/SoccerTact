@@ -23,7 +23,7 @@ away_team_required ="Liverpool"
 file_name=str(match_id_required)+'.json'
 
 import json
-with open('/Users/atifsiddiqui/Documents/SoccerTact/open-data-master/data/events/'+file_name) as data_file:
+with open('C:/Users/fares/OneDrive/Documentos/eecs 582/project/SoccerTact/'+file_name) as data_file:
     #print (mypath+'events/'+file)
     data = json.load(data_file)
     
