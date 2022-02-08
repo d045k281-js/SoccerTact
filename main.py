@@ -24,4 +24,9 @@ for i,event in events.iterrows():
     else:
         t2 = event['team_name']
 
+#m_id is the match ID
+#t1 is first teams name
+#t2 is second teams name
+#e_data is the event data for that match ID
+#l_data is the lineup data for that match ID
 generate_shots(m_id,t1,t2,e_data,l_data)
