@@ -12,6 +12,7 @@ Visualizations:
 - Shots Map
 - Passing Map
 - Passing Network
+- Pass Difficulty
 - Heat Maps
 - Shot Prediction
 - All the above visualizations possible for each player
