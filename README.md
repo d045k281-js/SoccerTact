@@ -8,13 +8,13 @@ Link to StatsBomb Open-source data repositary: https://github.com/statsbomb/open
 
 
 - Visualizations:
-- - Event Timeline with Tableau
-- Shots Map
-- Passing Map
-- Passing Network
-- Heat Maps
-- Shot Prediction
-- All the above visualizations possible for each player
+-- Event Timeline with Tableau
+-- Shots Map
+-- Passing Map
+-- Passing Network
+-- Heat Maps
+-- Shot Prediction
+-- All the above visualizations possible for each player
 
 ## Frontend:
 
