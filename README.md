@@ -5,16 +5,16 @@ SoccerTact is a web application that provides a complete analysis on soccer matc
 Link to StatsBomb Open-source data repositary: https://github.com/statsbomb/open-data
 
 ## Backend:
+Web Crawler that goes through event & lineup data and produces a json file for match selection drop-down menu.
 
-
-- Visualizations:
--- Event Timeline with Tableau
--- Shots Map
--- Passing Map
--- Passing Network
--- Heat Maps
--- Shot Prediction
--- All the above visualizations possible for each player
+Visualizations:
+- Event Timeline with Tableau
+- Shots Map
+- Passing Map
+- Passing Network
+- Heat Maps
+- Shot Prediction
+- All the above visualizations possible for each player
 
 ## Frontend:
 
