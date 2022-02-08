@@ -9,7 +9,7 @@ Web Crawler that goes through event & lineup data and produces a json file for m
 
 Visualizations:
 - Event Timeline with Tableau
-- Shots Map
+- Shots Map ✔
 - Passing Map
 - Passing Network
 - Pass Difficulty
