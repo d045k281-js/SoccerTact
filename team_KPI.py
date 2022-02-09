@@ -35,7 +35,7 @@ df = json_normalize(data, sep = "_").assign(match_id = file_name[:-5])
 gdp_dict = {home_team_required : [],
                 'Match details': ['total_shots','total_passes','penalty_box_entry','shots_from_penalty_area','total_corners','total_freekicks'],
                 away_team_required: []}
-
+possession = []
 Liv_data =  df.loc[df['team_name'] == 'Liverpool'].set_index('id')
 real_data =  df.loc[df['team_name'] == 'Real Madrid'].set_index('id')
 
@@ -50,7 +50,7 @@ def RealteamKPI():
     actions_PB = 0
     total_corners = 0
     total_freekicks = 0
-    
+    duration = 0
     
     for i, events in new_df.iterrows():
          x = events['location'][0]
@@ -65,7 +65,9 @@ def RealteamKPI():
                 
     
     for i, events in real_data.iterrows():
-        
+        if (not pd.isna(events['duration'])):
+            duration+=events['duration']
+            
         if (events['type_name'] == "Shot"):
             total_shots = total_shots + 1
         elif (events['type_name'] == "Pass"):
@@ -74,10 +76,10 @@ def RealteamKPI():
                 total_corners = total_corners + 1
             if (events['pass_type_name'] == 'Free Kick'):
                 total_freekicks = total_freekicks + 1
+    
+    possession.append(duration)
             
-                
-            
-    gdp_dict[home_team_required].extend([total_shots,total_passes,penalty_box_entry,shots_from_penalty_area,total_corners,total_freekicks]) 
+    gdp_dict[home_team_required].extend([int(total_shots),total_passes,penalty_box_entry,shots_from_penalty_area,total_corners,total_freekicks]) 
     print("=================")
     print("Real Madrid Stats")
     print("Total Shots " + str(total_shots))
@@ -86,6 +88,7 @@ def RealteamKPI():
     print("Shots from penalty area " + str(shots_from_penalty_area))
     print("Total Corners " + str(total_corners))
     print("Total Free Kicks " + str(total_freekicks))
+    print("Total Free Kicks " + str(duration))
     print("=================")
 
 def LivteamKPI():
@@ -97,6 +100,7 @@ def LivteamKPI():
     actions_PB = 0
     total_corners = 0
     total_freekicks = 0
+    duration = 0
     
     for i, events in new_df.iterrows():
          x = events['location'][0]
@@ -108,6 +112,8 @@ def LivteamKPI():
                 shots_from_penalty_area = shots_from_penalty_area + 1
                 
     for i, events in Liv_data.iterrows():
+        if (not pd.isna(events['duration'])):
+            duration+=events['duration']
         if (events['type_name'] == "Shot"):
             total_shots = total_shots + 1
         elif (events['type_name'] == "Pass"):
@@ -116,7 +122,8 @@ def LivteamKPI():
                 total_corners = total_corners + 1
             if (events['pass_type_name'] == 'Free Kick'):
                 total_freekicks = total_freekicks + 1
-    gdp_dict[away_team_required].extend([total_shots,total_passes,penalty_box_entry,shots_from_penalty_area,total_corners,total_freekicks])
+    gdp_dict[away_team_required].extend([int(total_shots),total_passes,penalty_box_entry,shots_from_penalty_area,total_corners,total_freekicks])
+    possession.append(duration)
     print("=================")
     print("Liverpool Stats")
     print("Total Shots " + str(total_shots))
@@ -125,10 +132,17 @@ def LivteamKPI():
     print("Shots from penalty area " + str(shots_from_penalty_area))
     print("Total Corners " + str(total_corners))
     print("Total Free Kicks " + str(total_freekicks))
+    print("Total Free Kicks " + str(duration))
     print("=================")
 
 RealteamKPI()    
 LivteamKPI()
+totalPossession = sum(possession) 
+homePossession = int((possession[0]/totalPossession)*100)
+awayPossession = 100 - homePossession
+gdp_dict[away_team_required].append(awayPossession)
+gdp_dict[home_team_required].append(homePossession)
+gdp_dict['Match details'].append("possession")
 data = pd.DataFrame(gdp_dict)
 data = data. set_index([ home_team_required ,'Match details', away_team_required])
 dfi.export(data, 'dataframe.png')
