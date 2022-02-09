@@ -33,7 +33,7 @@ with open('C:/Users/fares/OneDrive/Documentos/eecs 582/project/SoccerTact/'+file
 from pandas.io.json import json_normalize
 df = json_normalize(data, sep = "_").assign(match_id = file_name[:-5])
 gdp_dict = {home_team_required : [],
-                'Match details': ['total_shots','total_passes','penalty_box_entry','shots_from_penalty_area','total_corners','total_freekicks'],
+                'Match details': ['total_shots','total_passes','penalty_box_entry','shots_from_penalty_area','total_corners','total_freekicks','total_offside'],
                 away_team_required: []}
 possession = []
 Liv_data =  df.loc[df['team_name'] == 'Liverpool'].set_index('id')
@@ -51,6 +51,7 @@ def RealteamKPI():
     total_corners = 0
     total_freekicks = 0
     duration = 0
+    total_offside = 0
     
     for i, events in new_df.iterrows():
          x = events['location'][0]
@@ -76,20 +77,23 @@ def RealteamKPI():
                 total_corners = total_corners + 1
             if (events['pass_type_name'] == 'Free Kick'):
                 total_freekicks = total_freekicks + 1
-    
+            if (events['pass_outcome_name'] == 'Pass Offside'):
+                total_offside = total_offside + 1
+        if (events['type_name'] == "Offside"):
+            total_offside = total_offside + 1
     possession.append(duration)
             
-    gdp_dict[home_team_required].extend([int(total_shots),total_passes,penalty_box_entry,shots_from_penalty_area,total_corners,total_freekicks]) 
-    print("=================")
-    print("Real Madrid Stats")
-    print("Total Shots " + str(total_shots))
-    print("Total Passes " + str(total_passes))
-    print("Penalty Box Entries " + str(penalty_box_entry))
-    print("Shots from penalty area " + str(shots_from_penalty_area))
-    print("Total Corners " + str(total_corners))
-    print("Total Free Kicks " + str(total_freekicks))
-    print("Total Free Kicks " + str(duration))
-    print("=================")
+    gdp_dict[home_team_required].extend([int(total_shots),total_passes,penalty_box_entry,shots_from_penalty_area,total_corners,total_freekicks,total_offside]) 
+    # print("=================")
+    # print("Real Madrid Stats")
+    # print("Total Shots " + str(total_shots))
+    # print("Total Passes " + str(total_passes))
+    # print("Penalty Box Entries " + str(penalty_box_entry))
+    # print("Shots from penalty area " + str(shots_from_penalty_area))
+    # print("Total Corners " + str(total_corners))
+    # print("Total Free Kicks " + str(total_freekicks))
+    # print("Total Free Kicks " + str(duration))
+    # print("=================")
 
 def LivteamKPI():
     
@@ -101,6 +105,7 @@ def LivteamKPI():
     total_corners = 0
     total_freekicks = 0
     duration = 0
+    total_offside = 0
     
     for i, events in new_df.iterrows():
          x = events['location'][0]
@@ -122,18 +127,22 @@ def LivteamKPI():
                 total_corners = total_corners + 1
             if (events['pass_type_name'] == 'Free Kick'):
                 total_freekicks = total_freekicks + 1
-    gdp_dict[away_team_required].extend([int(total_shots),total_passes,penalty_box_entry,shots_from_penalty_area,total_corners,total_freekicks])
+            if (events['pass_outcome_name'] == 'Pass Offside'):
+                total_offside = total_offside + 1
+        if (events['type_name'] == "Offside"):
+            total_offside = total_offside + 1
+    gdp_dict[away_team_required].extend([int(total_shots),total_passes,penalty_box_entry,shots_from_penalty_area,total_corners,total_freekicks, total_offside])
     possession.append(duration)
-    print("=================")
-    print("Liverpool Stats")
-    print("Total Shots " + str(total_shots))
-    print("Total Passes " + str(total_passes))
-    print("Penalty Box Entries " + str(penalty_box_entry))
-    print("Shots from penalty area " + str(shots_from_penalty_area))
-    print("Total Corners " + str(total_corners))
-    print("Total Free Kicks " + str(total_freekicks))
-    print("Total Free Kicks " + str(duration))
-    print("=================")
+    # print("=================")
+    # print("Liverpool Stats")
+    # print("Total Shots " + str(total_shots))
+    # print("Total Passes " + str(total_passes))
+    # print("Penalty Box Entries " + str(penalty_box_entry))
+    # print("Shots from penalty area " + str(shots_from_penalty_area))
+    # print("Total Corners " + str(total_corners))
+    # print("Total Free Kicks " + str(total_freekicks))
+    # print("Total Free Kicks " + str(duration))
+    # print("=================")
 
 RealteamKPI()    
 LivteamKPI()
